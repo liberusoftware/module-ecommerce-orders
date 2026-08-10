@@ -1,0 +1,42 @@
+{
+    "name": "liberusoftware/ecommerce-orders",
+    "description": "The order: a placement made durable. Integer-minor-unit line snapshots that are never recomputed, a status state machine that refuses an illegal move, idempotent creation guaranteed by a unique index, and a published line contract for Fulfillment and Returns to hold.",
+    "type": "liberu-module",
+    "license": "MIT",
+    "version": "0.1.0",
+    "require": {
+        "php": "^8.5",
+        "laravel/framework": "^13.0",
+        "liberusoftware/module-manager": "^1.4"
+    },
+    "require-dev": {
+        "liberusoftware/package-testbench": "^1.7",
+        "pestphp/pest": "^5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Liberu\\Ecommerce\\Orders\\": "src/",
+            "Liberu\\Ecommerce\\Orders\\Database\\Factories\\": "database/factories/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Liberu\\Ecommerce\\Orders\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "liberu": {
+            "name": "ecommerce-orders"
+        }
+    },
+    "scripts": {
+        "test": "pest"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

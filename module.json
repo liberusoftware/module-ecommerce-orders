@@ -1,0 +1,37 @@
+{
+    "$schema": "https://schemas.liberu.dev/module/v1.json",
+    "name": "ecommerce-orders",
+    "display_name": "Orders",
+    "description": "What a shopper committed to, made durable: frozen lines that are never recomputed, a status state machine with no illegal move, creation that is idempotent by unique index rather than by lookup, and an order line published as a contract two later modules are built against.",
+    "version": "0.1.0",
+    "category": "product",
+    "provider": "Liberu\\Ecommerce\\Orders\\OrdersServiceProvider",
+    "requires": {
+        "php": "^8.5",
+        "laravel": "^13.0",
+        "packages": {
+            "liberusoftware/module-manager": "^1.4"
+        }
+    },
+    "capabilities": [
+        "ecommerce.orders"
+    ],
+    "default_enabled": false,
+    "features": [
+        "Orders",
+        "Order lines as a published contract",
+        "Line snapshots that are never recomputed",
+        "Integer minor units",
+        "Status state machine",
+        "Illegal transitions throw",
+        "Status history",
+        "Idempotent placement",
+        "Placement conflict and in-flight told apart",
+        "Cancellation before fulfillment",
+        "Line accounting for Fulfillment and Returns",
+        "Domain events",
+        "Read models",
+        "Order queries",
+        "Telemetry"
+    ]
+}
