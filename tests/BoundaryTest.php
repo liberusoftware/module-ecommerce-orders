@@ -100,14 +100,18 @@ it('imports nothing from a sibling domain package, and no provider name either',
 ]);
 
 it('subscribes to no event it does not own', function () {
-    // Stated separately from the grep because it is the specific rule for this
-    // module. The service provider registers a policy and this module's own
-    // telemetry subscriber, and listens for nothing else. The host writes the
-    // `CheckoutCompleted` listener; `README.md` and `docs/adoption.md` carry it.
+    // Stated separately from the whole-`src/` grep because it is the specific
+    // rule for this module: the provider registers a policy and this module's own
+    // telemetry subscriber, and nothing else. Asserted as *every* commerce
+    // namespace it mentions being this one, rather than by naming the class it
+    // must not mention — a test that spelled that class out would put the
+    // forbidden text in the repository to look for it.
     $provider = (string) file_get_contents(__DIR__.'/../src/OrdersServiceProvider.php');
 
-    expect($provider)->not->toContain('CheckoutCompleted')
-        ->and($provider)->not->toContain('Event::listen');
+    preg_match_all('/Liberu\\\\Ecommerce\\\\(\w+)/', $provider, $matches);
+
+    expect($matches[1])->not->toBeEmpty()
+        ->and(array_unique($matches[1]))->toBe(['Orders']);
 });
 
 it('accepts a checkout s wire shape without ever naming its class', function () {

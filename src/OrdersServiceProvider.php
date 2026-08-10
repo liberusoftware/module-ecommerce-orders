@@ -17,8 +17,9 @@ use Liberu\Ecommerce\Orders\Telemetry\DomainEventLogger;
  *
  * **Nothing here subscribes to Checkout's completion event.** That would be an
  * import of a sibling package, and this module has none — `BoundaryTest` reads
- * this file and refuses both the event's name and any `Event::listen` in it. The
- * host writes that listener; the README and `docs/adoption.md` carry it verbatim.
+ * this file and asserts that every commerce namespace it mentions is this one.
+ * The host writes that listener; the README and `docs/adoption.md` carry it
+ * verbatim.
  */
 class OrdersServiceProvider extends ServiceProvider
 {
