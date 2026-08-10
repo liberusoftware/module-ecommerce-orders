@@ -19,11 +19,12 @@ use Liberu\Ecommerce\Orders\Models\OrderStatusChange;
  *
  * ### It does not subscribe to anything
  *
- * Checkout emits `CheckoutCompleted`. Orders does **not** listen for it —
- * listening means importing the event class, and this package imports nothing
- * from a sibling `liberusoftware/ecommerce-*` package. The host writes one
- * listener and calls this; `README.md` and `docs/adoption.md` both carry it
- * verbatim. The suite here runs with no checkout module installed at all.
+ * Checkout announces a completed placement with an event. Orders does **not**
+ * listen for it — listening means importing that event class, and this package
+ * imports nothing from a sibling `liberusoftware/ecommerce-*` package. `src/`
+ * does not name it anywhere, and `BoundaryTest` greps for the text. The host
+ * writes one listener and calls this; `README.md` and `docs/adoption.md` both
+ * carry it verbatim. The suite here runs with no checkout module installed.
  *
  * ### Idempotency: the unique index is the guarantee
  *

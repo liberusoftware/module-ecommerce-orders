@@ -9,9 +9,11 @@ use Liberu\Ecommerce\Orders\Enums\LineKind;
  *
  * **Orders' own input shape**, not somebody else's read model. That distinction
  * is the wave-5 boundary rule: this package requires no sibling
- * `liberusoftware/ecommerce-*` package and imports from none, so it cannot
- * accept a `Liberu\Ecommerce\Checkout\Data\LineData` — accepting one is what
- * `require`ing Checkout looks like from the inside.
+ * `liberusoftware/ecommerce-*` package and imports from none, so it cannot accept
+ * a line value belonging to the checkout package. Accepting one is what
+ * `require`ing Checkout looks like from the inside — which is why this file does
+ * not name that class, and why `BoundaryTest` greps `src/` for the text of its
+ * namespace rather than for a `use` statement.
  *
  * Every figure arrives **already computed**. Nothing here derives a price, looks
  * a tax rate up, or allocates a discount: those all happened before the customer

@@ -6,30 +6,27 @@ namespace Liberu\Ecommerce\Orders\Data;
  * **Orders' own input shape.** Everything needed to write one order, as a plain
  * immutable value.
  *
- * ### Why this exists rather than a listener on `CheckoutCompleted`
+ * ### Why this exists rather than a listener on Checkout's event
  *
- * Checkout emits `CheckoutCompleted` carrying a `PlacedCheckout`, and Orders
- * **does not subscribe to it**. Subscribing means writing
- * `use Liberu\Ecommerce\Checkout\Events\CheckoutCompleted`, and that is an
+ * Checkout announces a completed placement with an event carrying a
+ * `PlacedCheckout`, and Orders **does not subscribe to it**. Subscribing means
+ * writing a `use` statement for a class in the checkout package, and that is an
  * import — the wave-5 rule is that Orders imports nothing from a sibling
- * `liberusoftware/ecommerce-*` package. This module's whole suite runs with no
- * checkout module installed, under a test named for it.
+ * `liberusoftware/ecommerce-*` package. Nothing in this file, or anywhere in
+ * `src/`, names that event or its namespace; `BoundaryTest` greps for the text of
+ * both. This module's whole suite runs with no checkout module installed, under a
+ * test named for it.
  *
- * So the wiring is one listener in the **host**, which is the only place
- * entitled to know that both modules exist:
- *
- * ```php
- * Event::listen(CheckoutCompleted::class, function (CheckoutCompleted $event): void {
- *     (new PlaceOrder())->handle(
- *         OrderPlacement::fromCheckoutArray($event->checkout->toArray())
- *     );
- * });
- * ```
+ * So the wiring is one listener in the **host**, which is the only place entitled
+ * to know that both modules exist. It is four lines, and `README.md` and
+ * `docs/adoption.md` carry it verbatim: the host's listener receives the event,
+ * calls `$event->checkout->toArray()`, and hands the result to
+ * `self::fromCheckoutArray()` and then to `Actions\PlaceOrder`.
  *
  * `fromCheckoutArray()` reads the **wire shape** a `PlacedCheckout` serialises
  * to — snake_case keys, integer minor units — not the class. A shape is a
  * contract you can copy; a class is a dependency you have to install.
- * `PlacementTest` pins the shape against a literal array written out by hand, so
+ * `BoundaryTest` pins the shape against a literal array written out by hand, so
  * if Checkout ever changes it, this repository's suite is what says so.
  *
  * ### What is deliberately not copied
